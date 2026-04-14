@@ -50,6 +50,14 @@ engines:
     disabled: true    # Disabling problematic one
   - name: yacy images
     disabled: true    # Disabling problematic one
+    name: karmasearch
+    disabled: true    # Disabled to avoid rate limiting (403 errors)
+  - name: karmasearch images
+    disabled: true    # Disabled to avoid rate limiting
+  - name: karmasearch videos
+    disabled: true    # Disabled to avoid rate limiting
+  - name: kickass
+    disabled: true    # Disabled (problematic)
 
 # =================================
 # Tavily Adapter Configuration
