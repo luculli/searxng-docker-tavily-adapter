@@ -27,6 +27,8 @@ Thumbs.db
 .playwright-mcp/
 .pnpm-store/
 .serena/
+.claude/
+.devcontainer/
 
 # Python
 __pycache__/
@@ -46,3 +48,4 @@ venv.bak/
 
 go.sh
 config.yaml
+Makefile
