@@ -1,63 +1,63 @@
 # SearXNG Docker Tavily Adapter
 
-**Бесплатная замена Tavily API на базе SearXNG** 🔍
+**Free Tavily API replacement powered by SearXNG** 🔍
 
-Используйте SearXNG с точно таким же API как у Tavily - без ограничений, без API ключей, полная приватность!
+Use SearXNG with the exact same API as Tavily - no limits, no API keys, full privacy!
 
-> 🎯 **Готовый Docker Compose стек** с SearXNG + Tavily-совместимым API адаптером
+> 🎯 **Ready Docker Compose stack** with SearXNG + Tavily-compatible API adapter
 
-## 🚀 Быстрый старт
+## 🚀 Quick Start
 
 ```bash
-# 1. Клонирование
+# 1. Clone
 git clone git@github.com:vakovalskii/searxng-docker-tavily-adapter.git
-# или HTTPS: git clone https://github.com/vakovalskii/searxng-docker-tavily-adapter.git
+# or HTTPS: git clone https://github.com/vakovalskii/searxng-docker-tavily-adapter.git
 cd searxng-docker-tavily-adapter
 
-# 2. Настройка конфигурации
+# 2. Configure
 cp config.example.yaml config.yaml
-# Поменяйте secret_key в config.yaml
+# Change secret_key in config.yaml
 
-# 3. Запуск
+# 3. Run
 docker compose up -d
 
-# 4. Тест
+# 4. Test
 curl -X POST "http://localhost:8000/search" \
      -H "Content-Type: application/json" \
-     -d '{"query": "цена bitcoin", "max_results": 3}'
+     -d '{"query": "bitcoin price", "max_results": 3}'
 ```
 
-## 💡 Использование
+## 💡 Usage
 
-### Drop-in замена для Tavily
+### Drop-in Tavily replacement
 
 ```python
-# Установите оригинальный Tavily клиент
+# Install the original Tavily client
 pip install tavily-python
 
 from tavily import TavilyClient
 
-# Просто поменяйте base_url!
+# Just change the base_url!
 client = TavilyClient(
-    api_key="не_важно",  # Игнорируется
-    base_url="http://localhost:8000"  # Ваш адаптер
+    api_key="any_value",  # Ignored
+    base_url="http://localhost:8000"  # Your adapter
 )
 
-# Используйте как обычно
+# Use as usual
 response = client.search(
-    query="цена bitcoin",
+    query="bitcoin price",
     max_results=5,
     include_raw_content=True
 )
 ```
 
-### Простой API
+### Simple API
 
 ```python
 import requests
 
 response = requests.post("http://localhost:8000/search", json={
-    "query": "что такое машинное обучение",
+    "query": "what is machine learning",
     "max_results": 5,
     "include_raw_content": True
 })
@@ -65,45 +65,45 @@ response = requests.post("http://localhost:8000/search", json={
 results = response.json()
 ```
 
-## 📦 Что внутри
+## 📦 What's Included
 
-- **SearXNG** (порт 8999) - мощный мета-поисковик
-- **Tavily Adapter** (порт 8000) - HTTP API совместимый с Tavily
-- **Redis** - кэширование для SearXNG
-- **Единый конфиг** - `config.yaml` для всех сервисов
+- **SearXNG** (port 8999) - powerful meta search engine
+- **Tavily Adapter** (port 8000) - HTTP API compatible with Tavily
+- **Redis** - caching for SearXNG
+- **Single config** - `config.yaml` for all services
 
-## 🎯 Преимущества
+## 🎯 Benefits
 
-| Tavily (оригинал) | SearXNG Adapter |
+| Tavily (original) | SearXNG Adapter |
 |-------------------|-----------------|
-| 💰 Платный | ✅ Бесплатный |
-| 🔑 Нужен API ключ | ✅ Без ключей |
-| 📊 Лимиты запросов | ✅ Без лимитов |
-| 🏢 Внешний сервис | ✅ Локальное развертывание |
-| ❓ Неизвестные источники | ✅ Контролируете движки |
+| 💰 Paid | ✅ Free |
+| 🔑 API key required | ✅ No keys needed |
+| 📊 Request limits | ✅ No limits |
+| 🏢 External service | ✅ Local deployment |
+| ❓ Unknown sources | ✅ Control the engines |
 
 ## 📋 API
 
-### Запрос
+### Request
 ```json
 {
-  "query": "поисковый запрос",
+  "query": "search query",
   "max_results": 10,
   "include_raw_content": false
 }
 ```
 
-### Ответ
+### Response
 ```json
 {
-  "query": "поисковый запрос",
+  "query": "search query",
   "results": [
     {
       "url": "https://example.com",
-      "title": "Заголовок",
-      "content": "Краткое описание...",
+      "title": "Title",
+      "content": "Short description...",
       "score": 0.9,
-      "raw_content": "Полный текст страницы..."
+      "raw_content": "Full page text..."
     }
   ],
   "response_time": 1.23,
@@ -111,68 +111,68 @@ results = response.json()
 }
 ```
 
-## 🕷️ Raw Content - веб-скрапинг
+## 🕷️ Raw Content - Web Scraping
 
-### Как работает `include_raw_content`
+### How `include_raw_content` works
 
 ```python
-# Без raw_content (быстро)
+# Without raw_content (fast)
 response = client.search(
-    query="машинное обучение",
+    query="machine learning",
     max_results=3
 )
-# content = краткий snippet из поисковика
+# content = short snippet from search engine
 # raw_content = null
 
-# С raw_content (медленнее, но больше данных)  
+# With raw_content (slower, but more data)  
 response = client.search(
-    query="машинное обучение", 
+    query="machine learning", 
     max_results=3,
     include_raw_content=True
 )
-# content = краткий snippet из поисковика
-# raw_content = полный текст страницы (до 2500 символов)
+# content = short snippet from search engine
+# raw_content = full page text (up to 2500 characters)
 ```
 
-### Что происходит под капотом
+### What happens under the hood
 
-1. **Поиск через SearXNG** - получаем URL и snippets
-2. **Параллельный скрапинг** - загружаем HTML каждой страницы
-3. **Очистка контента** - удаляем script, style, nav, footer
-4. **Извлечение текста** - конвертируем HTML в чистый текст
-5. **Обрезка до 2500 символов** - оптимальный размер для LLM
+1. **SearXNG search** - get URLs and snippets
+2. **Parallel scraping** - load HTML of each page
+3. **Content cleanup** - remove script, style, nav, footer
+4. **Text extraction** - convert HTML to plain text
+5. **Truncate to 2500 chars** - optimal size for LLM
 
-### Настройка скрапинга
+### Scraping configuration
 
-В `config.yaml`:
+In `config.yaml`:
 
 ```yaml
 adapter:
   scraper:
-    timeout: 10                    # Таймаут на страницу (сек)
-    max_content_length: 2500       # Макс. размер raw_content
-    user_agent: "Mozilla/5.0..."   # User-Agent для запросов
+    timeout: 10                    # Timeout per page (seconds)
+    max_content_length: 2500       # Maximum raw_content size
+    user_agent: "Mozilla/5.0..."   # User-Agent for requests
 ```
 
-### Производительность
+### Performance
 
-| Режим | Время ответа | Объем данных |
+| Mode | Response Time | Data Volume |
 |-------|-------------|--------------|
-| Без raw_content | ~1-2 сек | Только snippets |
-| С raw_content | ~3-5 сек | Полный текст страниц |
+| Without raw_content | ~1-2 sec | Snippets only |
+| With raw_content | ~3-5 sec | Full page text |
 
-> 💡 **Совет**: Используйте `raw_content=True` когда нужен полный контекст для LLM, и `False` для быстрого поиска.
+> 💡 **Tip**: Use `raw_content=True` when you need full context for LLM, and `False` for fast searches.
 
-## ⚙️ Настройка
+## ⚙️ Configuration
 
-Подробная инструкция: [CONFIG_SETUP.md](CONFIG_SETUP.md)
+Detailed instructions: [CONFIG_SETUP.md](CONFIG_SETUP.md)
 
-## 🏗️ Архитектура
+## 🏗️ Architecture
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Ваш код       │───▶│  Tavily Adapter  │───▶│     SearXNG     │
-│                 │    │   (порт 8000)    │    │   (порт 8999)   │
+│   Your code     │───▶│  Tavily Adapter  │───▶│     SearXNG     │
+│                 │    │   (port 8000)    │    │   (port 8999)   │
 │ requests.post() │    │                  │    │                 │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
                                 │                        │
@@ -183,18 +183,18 @@ adapter:
                        └──────────────────┘    └─────────────────┘
 ```
 
-## 🔧 Разработка
+## 🔧 Development
 
 ```bash
-# Локальная разработка адаптера
+# Local adapter development
 cd simple_tavily_adapter
 pip install -r requirements.txt
 python main.py
 
-# Тестирование
+# Testing
 python test_client.py
 ```
 
-## 📜 Лицензия
+## 📜 License
 
-MIT License - используйте как хотите! 🎉
+MIT License - use however you like! 🎉

@@ -1,12 +1,12 @@
 """
-Тест для проверки совместимости с оригинальным Tavily API
+Test to check compatibility with original Tavily API
 """
 from tavily_client import TavilyClient
 
-# Тест совместимости с оригинальным API
-client = TavilyClient(api_key="fake-key")  # API ключ не используется
+# Compatibility test with original API
+client = TavilyClient(api_key="fake-key")  # API key is not used
 response = client.search(
-    query="цена bmw x6",
+    query="price bmw x6",
     include_raw_content=True
 )
 

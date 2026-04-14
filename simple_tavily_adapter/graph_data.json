@@ -1,0 +1,412 @@
+{
+  "nodes": [
+    {
+      "id": "module-main",
+      "label": "main",
+      "type": "module",
+      "file": "simple_tavily_adapter/main.py",
+      "description": "FastAPI server that provides Tavily-compatible API using SearXNG backend"
+    },
+    {
+      "id": "module-tavily_client",
+      "label": "tavily_client",
+      "type": "module",
+      "file": "simple_tavily_adapter/tavily_client.py",
+      "description": "Tavily-compatible client for SearXNG"
+    },
+    {
+      "id": "module-config_loader",
+      "label": "config_loader",
+      "type": "module",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "Configuration loader for Tavily adapter"
+    },
+    {
+      "id": "module-test_client",
+      "label": "test_client",
+      "type": "module",
+      "file": "simple_tavily_adapter/test_client.py",
+      "description": "Compatibility test with original Tavily API"
+    },
+    {
+      "id": "class-FastAPI",
+      "label": "FastAPI",
+      "type": "class",
+      "module": "fastapi",
+      "description": "FastAPI web framework instance"
+    },
+    {
+      "id": "class-SearchRequest",
+      "label": "SearchRequest",
+      "type": "class",
+      "file": "simple_tavily_adapter/main.py",
+      "description": "Pydantic model for search request"
+    },
+    {
+      "id": "class-TavilyResult",
+      "label": "TavilyResult",
+      "type": "class",
+      "file": "simple_tavily_adapter/tavily_client.py",
+      "description": "Pydantic model for search result"
+    },
+    {
+      "id": "class-TavilyResponse",
+      "label": "TavilyResponse",
+      "type": "class",
+      "file": "simple_tavily_adapter/tavily_client.py",
+      "description": "Pydantic model for API response"
+    },
+    {
+      "id": "class-TavilyClient",
+      "label": "TavilyClient",
+      "type": "class",
+      "file": "simple_tavily_adapter/tavily_client.py",
+      "description": "Tavily-compatible client for SearXNG"
+    },
+    {
+      "id": "class-Config",
+      "label": "Config",
+      "type": "class",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "Configuration manager class"
+    },
+    {
+      "id": "func-fetch_raw_content",
+      "label": "fetch_raw_content",
+      "type": "function",
+      "file": "simple_tavily_adapter/main.py",
+      "description": "Scrapes page and returns first 2500 characters of text"
+    },
+    {
+      "id": "func-search",
+      "label": "search",
+      "type": "function",
+      "file": "simple_tavily_adapter/main.py",
+      "description": "Tavily-compatible search endpoint"
+    },
+    {
+      "id": "func-health",
+      "label": "health",
+      "type": "function",
+      "file": "simple_tavily_adapter/main.py",
+      "description": "Health check endpoint"
+    },
+    {
+      "id": "func-main",
+      "label": "main",
+      "type": "function",
+      "file": "simple_tavily_adapter/main.py",
+      "description": "Entry point when running script directly"
+    },
+    {
+      "id": "func-TavilyClient_init",
+      "label": "__init__",
+      "type": "function",
+      "file": "simple_tavily_adapter/tavily_client.py",
+      "description": "TavilyClient constructor"
+    },
+    {
+      "id": "func-TavilyClient__fetch_raw_content",
+      "label": "_fetch_raw_content",
+      "type": "function",
+      "file": "simple_tavily_adapter/tavily_client.py",
+      "description": "Scrapes page for raw content"
+    },
+    {
+      "id": "func-TavilyClient_search",
+      "label": "search",
+      "type": "function",
+      "file": "simple_tavily_adapter/tavily_client.py",
+      "description": "Search using SearXNG with Tavily-compatible interface"
+    },
+    {
+      "id": "func-TavilyClient_async_search",
+      "label": "_async_search",
+      "type": "function",
+      "file": "simple_tavily_adapter/tavily_client.py",
+      "description": "Async search implementation"
+    },
+    {
+      "id": "func-Config_load_config",
+      "label": "_load_config",
+      "type": "function",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "Load configuration from YAML file"
+    },
+    {
+      "id": "func-test_client_search",
+      "label": "search",
+      "type": "function",
+      "file": "simple_tavily_adapter/test_client.py",
+      "description": "Test search call to verify API compatibility"
+    },
+    {
+      "id": "prop-Config_searxng_url",
+      "label": "searxng_url",
+      "type": "property",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "SearXNG backend URL"
+    },
+    {
+      "id": "prop-Config_server_host",
+      "label": "server_host",
+      "type": "property",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "Server bind host"
+    },
+    {
+      "id": "prop-Config_server_port",
+      "label": "server_port",
+      "type": "property",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "Server port"
+    },
+    {
+      "id": "prop-Config_scraper_timeout",
+      "label": "scraper_timeout",
+      "type": "property",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "Scraper timeout in seconds"
+    },
+    {
+      "id": "prop-Config_scraper_max_length",
+      "label": "scraper_max_length",
+      "type": "property",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "Maximum content length for scraped pages"
+    },
+    {
+      "id": "prop-Config_scraper_user_agent",
+      "label": "scraper_user_agent",
+      "type": "property",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "User agent string for scrapers"
+    },
+    {
+      "id": "prop-Config_default_max_results",
+      "label": "default_max_results",
+      "type": "property",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "Default maximum results per search"
+    },
+    {
+      "id": "prop-Config_default_engines",
+      "label": "default_engines",
+      "type": "property",
+      "file": "simple_tavily_adapter/config_loader.py",
+      "description": "Default search engines to use"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-main-to-tavily_client",
+      "source": "module-main",
+      "target": "module-tavily_client",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-main-to-config_loader",
+      "source": "module-main",
+      "target": "module-config_loader",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-config_loader-to-main",
+      "source": "module-config_loader",
+      "target": "module-main",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-test_client-to-tavily_client",
+      "source": "module-test_client",
+      "target": "module-tavily_client",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-test_client-to-main",
+      "source": "module-test_client",
+      "target": "module-main",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-main-search-to-fetch_raw_content",
+      "source": "func-search",
+      "target": "func-fetch_raw_content",
+      "type": "calls",
+      "label": "calls"
+    },
+    {
+      "id": "edge-main-search-to-TavilyResult",
+      "source": "func-search",
+      "target": "class-TavilyResult",
+      "type": "uses",
+      "label": "uses"
+    },
+    {
+      "id": "edge-main-search-to-TavilyResponse",
+      "source": "func-search",
+      "target": "class-TavilyResponse",
+      "type": "uses",
+      "label": "uses"
+    },
+    {
+      "id": "edge-main-search-to-config",
+      "source": "func-search",
+      "target": "prop-Config_scraper_timeout",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-main-search-to-config",
+      "source": "func-search",
+      "target": "prop-Config_scraper_max_length",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-main-search-to-config",
+      "source": "func-search",
+      "target": "prop-Config_scraper_user_agent",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-main-search-to-config",
+      "source": "func-search",
+      "target": "prop-Config_searxng_url",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-main-health-to-config",
+      "source": "func-health",
+      "target": "module-main",
+      "type": "depends_on",
+      "label": "depends_on"
+    },
+    {
+      "id": "edge-main-main-to-config",
+      "source": "func-main",
+      "target": "prop-Config_server_host",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-main-main-to-config",
+      "source": "func-main",
+      "target": "prop-Config_server_port",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-main-search-to-tavily_client",
+      "source": "func-search",
+      "target": "module-tavily_client",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-main-search-to-config_loader",
+      "source": "func-search",
+      "target": "module-config_loader",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-tavily_client-TavilyClient_init-to-config",
+      "source": "func-TavilyClient_init",
+      "target": "module-config_loader",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-tavily_client-TavilyClient_search-to-TavilyClient_async_search",
+      "source": "func-TavilyClient_search",
+      "target": "func-TavilyClient_async_search",
+      "type": "calls",
+      "label": "calls"
+    },
+    {
+      "id": "edge-tavily_client-TavilyClient_async_search-to-fetch_raw_content",
+      "source": "func-TavilyClient_async_search",
+      "target": "func-TavilyClient__fetch_raw_content",
+      "type": "calls",
+      "label": "calls"
+    },
+    {
+      "id": "edge-tavily_client-TavilyClient_async_search-to-TavilyResult",
+      "source": "func-TavilyClient_async_search",
+      "target": "class-TavilyResult",
+      "type": "uses",
+      "label": "uses"
+    },
+    {
+      "id": "edge-tavily_client-TavilyClient_async_search-to-TavilyResponse",
+      "source": "func-TavilyClient_async_search",
+      "target": "class-TavilyResponse",
+      "type": "uses",
+      "label": "uses"
+    },
+    {
+      "id": "edge-tavily_client-TavilyClient_async_search-to-config",
+      "source": "func-TavilyClient_async_search",
+      "target": "prop-Config_scraper_timeout",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-tavily_client-TavilyClient_async_search-to-config",
+      "source": "func-TavilyClient_async_search",
+      "target": "prop-Config_scraper_max_length",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-tavily_client-TavilyClient_async_search-to-config",
+      "source": "func-TavilyClient_async_search",
+      "target": "prop-Config_scraper_user_agent",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-tavily_client-TavilyClient_async_search-to-config",
+      "source": "func-TavilyClient_async_search",
+      "target": "prop-Config_searxng_url",
+      "type": "configures",
+      "label": "uses config"
+    },
+    {
+      "id": "edge-tavily_client-TavilyResult-to-config",
+      "source": "class-TavilyResult",
+      "target": "module-config_loader",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-tavily_client-TavilyResponse-to-config",
+      "source": "class-TavilyResponse",
+      "target": "module-config_loader",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-config_loader-Config_load_config-to-main",
+      "source": "func-Config_load_config",
+      "target": "module-main",
+      "type": "imports",
+      "label": "imports"
+    },
+    {
+      "id": "edge-test_client-search-to-TavilyClient",
+      "source": "func-test_client_search",
+      "target": "class-TavilyClient",
+      "type": "uses",
+      "label": "uses"
+    }
+  ]
+}

@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from tavily_client import TavilyResponse, TavilyResult
 from config_loader import config
 
-# Настройка логирования
+# Logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ class SearchRequest(BaseModel):
 
 
 async def fetch_raw_content(session: aiohttp.ClientSession, url: str) -> str | None:
-    """Скрапит страницу и возвращает первые 2500 символов текста"""
+    """Scrapes page and returns first 2500 characters of text"""
     try:
         async with session.get(
             url,
@@ -42,14 +42,14 @@ async def fetch_raw_content(session: aiohttp.ClientSession, url: str) -> str | N
             html = await response.text()
             soup = BeautifulSoup(html, 'html.parser')
             
-            # Удаляем ненужное
+            # Remove unnecessary elements
             for tag in soup(['script', 'style', 'nav', 'header', 'footer', 'aside']):
                 tag.decompose()
             
-            # Берем текст
+            # Get the text
             text = soup.get_text(separator=' ', strip=True)
             
-            # Обрезаем до настроенного размера
+            # Truncate to configured size
             if len(text) > config.scraper_max_length:
                 text = text[:config.scraper_max_length] + "..."
             
@@ -68,20 +68,20 @@ async def search(request: SearchRequest) -> dict[str, Any]:
     
     logger.info(f"Search request: {request.query}")
     
-    # Формируем запрос к SearXNG
+    # Formulate request to SearXNG
     searxng_params = {
         "q": request.query,
         "format": "json",
         "categories": "general",
-        "engines": "google,duckduckgo,brave",  # Убрали Bing
+        "engines": "google,duckduckgo,brave",  # Removed Bing
         "pageno": 1,
         "language": "auto",
         "safesearch": 1,
     }
     
-# Убрали обработку доменов - не нужно для упрощенного API
+# Removed domain handling - not needed for simplified API
     
-    # Выполняем запрос к SearXNG
+    # Execute request to SearXNG
     headers = {
         'X-Forwarded-For': '127.0.0.1',
         'X-Real-IP': '127.0.0.1',
@@ -106,11 +106,11 @@ async def search(request: SearchRequest) -> dict[str, Any]:
             logger.error(f"SearXNG error: {e}")
             raise HTTPException(status_code=500, detail="Search service unavailable")
     
-    # Конвертируем результаты в формат Tavily
+    # Convert results to Tavily format
     results = []
     searxng_results = searxng_data.get("results", [])
     
-    # Если нужен raw_content, скрапим страницы
+    # If raw_content is needed, scrape pages
     raw_contents = {}
     if request.include_raw_content and searxng_results:
         urls_to_scrape = [r["url"] for r in searxng_results[:request.max_results] if r.get("url")]
@@ -135,7 +135,7 @@ async def search(request: SearchRequest) -> dict[str, Any]:
             url=result["url"],
             title=result.get("title", ""),
             content=result.get("content", ""),
-            score=0.9 - (i * 0.05),  # Простая имитация скора
+            score=0.9 - (i * 0.05),  # Simple score simulation
             raw_content=raw_content
         )
         results.append(tavily_result)

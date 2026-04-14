@@ -61,5 +61,5 @@ class Config:
     def default_engines(self) -> str:
         return self._config.get("adapter", {}).get("search", {}).get("default_engines", "google,duckduckgo,brave")
 
-# Глобальный экземпляр конфига
+# Global config instance
 config = Config()

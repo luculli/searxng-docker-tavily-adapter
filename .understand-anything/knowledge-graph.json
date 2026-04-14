@@ -1,0 +1,372 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "SearXNG Docker Tavily Adapter",
+    "languages": ["Python", "YAML", "Dockerfile", "Markdown", "Makefile", "TOML", "JSON"],
+    "frameworks": ["FastAPI", "Pydantic", "aiohttp", "BeautifulSoup", "uvicorn", "Docker Compose", "Caddy"],
+    "description": "A free, self-hosted Tavily API replacement powered by SearXNG that provides Tavily-compatible search API with zero cost, no limits, and full privacy",
+    "analyzedAt": "2026-04-14T09:35:00Z",
+    "gitCommitHash": "14636427571948779c00c9613731426e3bc5220c"
+  },
+  "nodes": [
+    {
+      "id": "file:.env",
+      "type": "file",
+      "name": ".env",
+      "filePath": ".env",
+      "summary": "Environment configuration file for local development settings and secrets.",
+      "tags": ["configuration", "environment", "secrets"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CONFIG_SETUP.md",
+      "type": "document",
+      "name": "CONFIG_SETUP.md",
+      "filePath": "CONFIG_SETUP.md",
+      "summary": "Comprehensive setup guide covering unified YAML configuration for both SearXNG and Tavily Adapter with deployment instructions.",
+      "tags": ["documentation", "setup-guide", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:Caddyfile",
+      "type": "file",
+      "name": "Caddyfile",
+      "filePath": "Caddyfile",
+      "summary": "Caddy reverse proxy configuration with reverse proxy to SearXNG, comprehensive security headers, CSP, and API routing.",
+      "tags": ["infrastructure", "reverse-proxy", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Project documentation with architecture overview, API usage examples, development flow, and mermaid diagrams illustrating request flows.",
+      "tags": ["documentation", "entry-point", "overview"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:config.example.yaml",
+      "type": "config",
+      "name": "config.example.yaml",
+      "filePath": "config.example.yaml",
+      "summary": "Unified YAML configuration template for both SearXNG backend and Tavily Adapter frontend with search engine and scraper settings.",
+      "tags": ["configuration", "yaml", "search-engines"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "pipeline:docker-compose.yaml",
+      "type": "pipeline",
+      "name": "docker-compose.yaml",
+      "filePath": "docker-compose.yaml",
+      "summary": "Docker Compose orchestration for Redis/Valkey cache, SearXNG search engine, and Tavily Adapter API service deployment.",
+      "tags": ["infrastructure", "orchestration", "deployment"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:searxng-docker.service.template",
+      "type": "file",
+      "name": "searxng-docker.service.template",
+      "filePath": "searxng-docker.service.template",
+      "summary": "Systemd service template for running SearXNG outside Docker with environment variable substitution support.",
+      "tags": ["infrastructure", "systemd", "deployment"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:searxng/limiter.toml",
+      "type": "config",
+      "name": "limiter.toml",
+      "filePath": "searxng/limiter.toml",
+      "summary": "SearXNG bot detection and rate limiting configuration with IP-based protection settings.",
+      "tags": ["configuration", "bot-detection", "security"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:simple_tavily_adapter/Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "simple_tavily_adapter/Dockerfile",
+      "summary": "Multi-stage Docker build for Tavily Adapter Python application with FastAPI and aiohttp dependencies.",
+      "tags": ["containerization", "infrastructure", "python"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:simple_tavily_adapter/requirements.txt",
+      "type": "config",
+      "name": "requirements.txt",
+      "filePath": "simple_tavily_adapter/requirements.txt",
+      "summary": "Python dependencies for Tavily Adapter including FastAPI, aiohttp, beautifulsoup4, and pydantic.",
+      "tags": ["dependencies", "python", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:simple_tavily_adapter/config_loader.py",
+      "type": "file",
+      "name": "config_loader.py",
+      "filePath": "simple_tavily_adapter/config_loader.py",
+      "summary": "Centralized configuration management using Python Config class with YAML parsing and property-based accessors for SearXNG adapter settings.",
+      "tags": ["utility", "configuration", "singleton"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:simple_tavily_adapter/main.py",
+      "type": "file",
+      "name": "main.py",
+      "filePath": "simple_tavily_adapter/main.py",
+      "summary": "FastAPI server implementation providing Tavily-compatible /search endpoint that forwards requests to SearXNG with optional raw content scraping.",
+      "tags": ["api-handler", "entry-point", "fastapi"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:simple_tavily_adapter/tavily_client.py",
+      "type": "file",
+      "name": "tavily_client.py",
+      "filePath": "simple_tavily_adapter/tavily_client.py",
+      "summary": "Tavily-compatible Python client library with async search methods and Pydantic models for request/response serialization.",
+      "tags": ["api-handler", "client", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:simple_tavily_adapter/test_client.py",
+      "type": "file",
+      "name": "test_client.py",
+      "filePath": "simple_tavily_adapter/test_client.py",
+      "summary": "Test client script for verifying Tavily Client search functionality and response format compatibility.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "pipeline:docker-compose.yaml",
+      "target": "service:simple_tavily_adapter/Dockerfile",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "pipeline:docker-compose.yaml",
+      "target": "file:Caddyfile",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:config.example.yaml",
+      "target": "file:simple_tavily_adapter/main.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:config.example.yaml",
+      "target": "config:searxng/limiter.toml",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:simple_tavily_adapter/Dockerfile",
+      "target": "file:simple_tavily_adapter/main.py",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:simple_tavily_adapter/Dockerfile",
+      "target": "config:simple_tavily_adapter/requirements.txt",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:Caddyfile",
+      "target": "file:simple_tavily_adapter/main.py",
+      "type": "routes",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:simple_tavily_adapter/main.py",
+      "target": "file:simple_tavily_adapter/tavily_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:simple_tavily_adapter/tavily_client.py",
+      "target": "file:simple_tavily_adapter/config_loader.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:simple_tavily_adapter/main.py",
+      "target": "file:simple_tavily_adapter/config_loader.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:simple_tavily_adapter/test_client.py",
+      "target": "file:simple_tavily_adapter/tavily_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "pipeline:docker-compose.yaml",
+      "target": "config:config.example.yaml",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:simple_tavily_adapter/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONFIG_SETUP.md",
+      "target": "config:config.example.yaml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:config.example.yaml",
+      "target": "file:searxng-docker.service.template",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:Caddyfile",
+      "target": "config:config.example.yaml",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:config.example.yaml",
+      "target": "pipeline:docker-compose.yaml",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "api-layer",
+      "name": "API Layer",
+      "description": "FastAPI server implementation providing Tavily-compatible endpoints",
+      "nodeIds": ["file:simple_tavily_adapter/main.py"]
+    },
+    {
+      "id": "client-library-layer",
+      "name": "Client Library Layer",
+      "description": "Python client library for Tavily-compatible API interaction",
+      "nodeIds": ["file:simple_tavily_adapter/tavily_client.py"]
+    },
+    {
+      "id": "service-layer",
+      "name": "Service Layer",
+      "description": "Business logic, orchestration, and client library for backend services",
+      "nodeIds": ["file:simple_tavily_adapter/config_loader.py", "file:simple_tavily_adapter/test_client.py"]
+    },
+    {
+      "id": "configuration-layer",
+      "name": "Configuration Layer",
+      "description": "YAML and environment-based configuration management",
+      "nodeIds": ["config:config.example.yaml", "config:searxng/limiter.toml"]
+    },
+    {
+      "id": "infrastructure-layer",
+      "name": "Infrastructure Layer",
+      "description": "Containerization, reverse proxy, and deployment configuration",
+      "nodeIds": ["pipeline:docker-compose.yaml", "service:simple_tavily_adapter/Dockerfile", "file:Caddyfile", "file:.env", "file:searxng-docker.service.template"]
+    },
+    {
+      "id": "documentation-layer",
+      "name": "Documentation Layer",
+      "description": "Project documentation and onboarding guides",
+      "nodeIds": ["document:README.md", "document:CONFIG_SETUP.md"]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Start Here: Understand the Big Picture",
+      "description": "Start with README.md to understand the project vision - a free Tavily API replacement powered by SearXNG with zero cost, no limits, and full privacy.",
+      "nodeIds": ["document:README.md"]
+    },
+    {
+      "order": 2,
+      "title": "Configuration: The Glue That Holds It All Together",
+      "description": "Explore CONFIG_SETUP.md and config.example.yaml to understand the unified configuration approach for both SearXNG and the Tavily Adapter.",
+      "nodeIds": ["document:CONFIG_SETUP.md", "config:config.example.yaml"]
+    },
+    {
+      "order": 3,
+      "title": "Infrastructure: Docker Compose Orchestration",
+      "description": "Understand the three-container architecture (redis cache, searxng search engine, tavily-adapter API) orchestrated by docker-compose.yaml.",
+      "nodeIds": ["pipeline:docker-compose.yaml"]
+    },
+    {
+      "order": 4,
+      "title": "Dockerfile: How the Adapter is Built",
+      "description": "See how the Tavily Adapter is containerized using Python 3.11-slim with FastAPI, uvicorn, aiohttp, pydantic, and beautifulsoup4.",
+      "nodeIds": ["service:simple_tavily_adapter/Dockerfile"]
+    },
+    {
+      "order": 5,
+      "title": "Configuration Loading: Python Singleton Pattern",
+      "description": "Learn how config_loader.py uses a singleton Config class to provide centralized configuration access via config_loader.config.",
+      "nodeIds": ["file:simple_tavily_adapter/config_loader.py"]
+    },
+    {
+      "order": 6,
+      "title": "The FastAPI Server: Request Handling",
+      "description": "Trace the request flow in main.py - from receiving POST /search requests to calling SearXNG and returning Tavily-compatible responses.",
+      "nodeIds": ["file:simple_tavily_adapter/main.py"]
+    },
+    {
+      "order": 7,
+      "title": "The Client Library: Drop-in Tavily Replacement",
+      "description": "Understand tavily_client.py which provides the same interface as the official tavily-python package, letting you just change the base_url.",
+      "nodeIds": ["file:simple_tavily_adapter/tavily_client.py"]
+    },
+    {
+      "order": 8,
+      "title": "Testing: Verifying Compatibility",
+      "description": "See how test_client.py verifies the adapter produces Tavily-compatible responses with proper structure and raw content fields.",
+      "nodeIds": ["file:simple_tavily_adapter/test_client.py"]
+    },
+    {
+      "order": 9,
+      "title": "End-to-End: Running the Full Stack",
+      "description": "Learn the complete workflow: clone, configure, docker compose up, and test with curl or the Python client.",
+      "nodeIds": ["pipeline:docker-compose.yaml", "document:README.md"]
+    },
+    {
+      "order": 10,
+      "title": "Deep Dive: The Raw Content Scraping Flow",
+      "description": "Explore what happens when include_raw_content=True - parallel HTML fetching, BeautifulSoup cleaning, and text extraction up to 2500 characters.",
+      "nodeIds": ["file:simple_tavily_adapter/main.py", "file:simple_tavily_adapter/tavily_client.py"]
+    },
+    {
+      "order": 11,
+      "title": "Architecture Patterns You Can Reuse",
+      "description": "Identify reusable design patterns: API adapter pattern, singleton configuration, async client layer, and unified configuration.",
+      "nodeIds": ["file:simple_tavily_adapter/main.py", "file:simple_tavily_adapter/config_loader.py", "config:config.example.yaml"]
+    },
+    {
+      "order": 12,
+      "title": "Deployment: Beyond Docker Compose",
+      "description": "Explore production deployment options including systemd service templates and Caddy reverse proxy with security headers.",
+      "nodeIds": ["file:Caddyfile", "file:searxng-docker.service.template"]
+    }
+  ]
+}

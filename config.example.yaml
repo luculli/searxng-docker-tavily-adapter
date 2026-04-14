@@ -1,77 +1,77 @@
-# Единый конфигурационный файл для SearXNG + Tavily Adapter
+# Unified configuration file for SearXNG + Tavily Adapter
 # 
-# ВАЖНО: Скопируйте этот файл в config.yaml и измените настройки под себя:
+# IMPORTANT: Copy this file to config.yaml and modify the settings as needed:
 # cp config.example.yaml config.yaml
 #
-# Обязательно поменяйте:
-# - server.secret_key (для SearXNG)
-# - adapter.searxng_url (если нужно)
-# - adapter.scraper.user_agent (опционально)
+# Be sure to change:
+# - server.secret_key (for SearXNG)
+# - adapter.searxng_url (if needed)
+# - adapter.scraper.user_agent (optional)
 
 # =================================
-# SearXNG Configuration (корневой уровень для SearXNG)
+# SearXNG Configuration (root level for SearXNG)
 # =================================
 use_default_settings: true
 
 server:
-  # base_url определяется в SEARXNG_BASE_URL environment variable
-  secret_key: "CHANGE_ME_TO_RANDOM_SECRET_KEY_32_CHARS_OR_MORE"  # ОБЯЗАТЕЛЬНО ПОМЕНЯЙТЕ!
-  limiter: false  # Отключаем для API использования
+  # base_url is defined in the SEARXNG_BASE_URL environment variable
+  secret_key: "CHANGE_ME_TO_RANDOM_SECRET_KEY_32_CHARS_OR_MORE"  # MUST CHANGE!
+  limiter: false  # Disabled for API usage
   image_proxy: true
   
-# Поддержка форматов (критично для API)
+# Format support (critical for API)
 search:
   formats:
     - html
-    - json    # Обязательно для API!
+    - json    # Required for API!
     - csv
     - rss
 
-# Redis/Valkey настройки
+# Redis/Valkey settings
 valkey:
   url: redis://redis:6379/0
 
-# Оптимизация сетевых запросов
+# Network request optimization
 outgoing:
   request_timeout: 10.0
   max_request_timeout: 15.0
   
-# Конфигурация поисковых движков
+# Search engine configuration
 engines:
   - name: google
     disabled: false
   - name: bing
-    disabled: true    # Отключен по запросу
+    disabled: true    # Disabled on request
   - name: duckduckgo
     disabled: false
   - name: brave
     disabled: false
   - name: startpage
-    disabled: true    # Отключаем проблемный
+    disabled: true    # Disabling problematic one
   - name: yacy images
-    disabled: true    # Отключаем проблемный
+    disabled: true    # Disabling problematic one
 
 # =================================
-# Tavily Adapter Configuration  
+# Tavily Adapter Configuration
 # =================================
 adapter:
-  # Настройки сервера адаптера
+  # Adapter server settings
   server:
     host: "0.0.0.0"
     port: 8000
 
-  # URL для подключения к SearXNG 
-  # Внутренний Docker URL (если в одной сети): "http://searxng:8080"
-  # Внешний URL (если отдельно): "http://localhost:8999"
+  # URL to connect to SearXNG
+  # Internal Docker URL (if in the same network): "http://searxng:8080"
+  # External URL (if separate): "http://localhost:8999"
   searxng_url: "http://searxng:8080"
 
-  # Настройки скрапера
+  # Scraper settings
   scraper:
     timeout: 10
     max_content_length: 2500
-    user_agent: "Mozilla/5.0 (compatible; TavilyBot/1.0)"  # Можете поменять на свой
+    user_agent: "Mozilla/5.0 (compatible; TavilyBot/1.0)"  # You can change to your own
 
-  # Настройки поиска по умолчанию
+  # Default search settings
   search:
     default_max_results: 10
     default_engines: "google,duckduckgo,brave"
