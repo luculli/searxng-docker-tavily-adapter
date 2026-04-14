@@ -61,5 +61,14 @@ class Config:
     def default_engines(self) -> str:
         return self._config.get("adapter", {}).get("search", {}).get("default_engines", "google,duckduckgo,brave")
 
+    @property
+    def cors_origins(self) -> list[str]:
+        """Get list of allowed CORS origins"""
+        origins = self._config.get("adapter", {}).get("cors_origins", [])
+        if not origins:
+            # Default to allowing localhost and Docker network
+            return ["*"]
+        return origins
+
 # Global config instance
 config = Config()

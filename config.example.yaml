@@ -86,3 +86,7 @@ adapter:
     default_categories: "general"
     default_language: "auto"
     safesearch: 1
+
+  # CORS settings for the adapter
+  cors_origins:
+    - "*"  # Change this to specific origins in production (e.g., ["http://localhost:3000", "http://localhost:8000"])
